@@ -11,9 +11,9 @@ public class myApp extends Application {
         return networkingService;
     }
 
-    //    private JsonService jsonService = new JsonService();
-//
-//    public JsonService getJsonService() {
-//        return jsonService;
-//    }
+        private JsonService jsonService = new JsonService();
+
+    public JsonService getJsonService() {
+        return jsonService;
+    }
 }

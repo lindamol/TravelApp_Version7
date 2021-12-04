@@ -20,10 +20,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements CountryAdapter.countryClickListner,NetworkingService.NetworkingListener{
     RecyclerView countryrecyclerView;
     CountryAdapter cadapter;
-    NetworkingService networkingService = new NetworkingService();
+    NetworkingService networkingService;// = new NetworkingService();
     TextView advisorytext ;
     Button countrybutton;
-    JsonService jsonService = new JsonService();
+    JsonService jsonService;// = new JsonService();
     ArrayList<Country> countries = new ArrayList<Country>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +33,15 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
         countrybutton = findViewById(R.id.countryviewbutton);
         advisorytext.setVisibility(View.INVISIBLE);
         countrybutton.setVisibility(View.INVISIBLE);
+        jsonService = ( (myApp)getApplication()).getJsonService();
+        networkingService = ( (myApp)getApplication()).getNetworkingService();
        // countries.add(new Country("India"));//check
         countryrecyclerView = findViewById(R.id.country_recyclerview);
         countryrecyclerView.setLayoutManager(new LinearLayoutManager(this));
         cadapter = new CountryAdapter(this,countries);
         countryrecyclerView.setAdapter(cadapter);
-       // networkingService = ( (myApp)getApplication()).getNetworkingService();
-        //jsonService = ( (myApp)getApplication()).getJsonService();
         networkingService.listener = this;
         networkingService.fetchCountryData();
-
     }
 
    /* @Override
@@ -86,9 +85,9 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
 
     @Override
     public void countryClicked(Country selectedCountry) {
-//        Intent intent = new Intent(this,WeatherActivity.class);
-//        intent.putExtra("SelectedCity",selectedCity.getCityName());
-//        startActivity(intent);
+        Intent intent = new Intent(this,InformationActivity.class);
+        intent.putExtra("SelectedCountry",selectedCountry.getCountryName());
+        startActivity(intent);
     }
 
     @Override

@@ -23,13 +23,10 @@ public class NetworkingService {
 //    String iconURL2 = "@2x.png";
     //https://travelbriefing.org/countries.json
 
-   String url = "https://travelbriefing.org/countries.json";
+   String countrynameurl = "https://travelbriefing.org/countries.json";
+    String urlInfo1 = "https://travelbriefing.org/";
+    String urlinfo3 = "?format=json";
     //https://travelbriefing.org/Canada?format=json
-//      String url1 = "https://travelbriefing.org/";
-//      String url2 = "Canada";
-//           //String url3 = "?format=json";
-//      String url3 = "?format=json";
-//      String url = url1 + url2+url3;
     //https://restcountries.com/v3.1/name/can
   // String url = "https://restcountries.com/v3.1/name/";
 
@@ -43,12 +40,16 @@ public class NetworkingService {
     }
 
     NetworkingListener listener;
-
-
     public void fetchCountryData(){
-        String completeURL = url;
-        System.out.println("My url" + url);
+        String completeURL = countrynameurl;
+       //System.out.println("My url" + countrynameurl);
         connect(completeURL);
+    }
+    public void fetchCountryInfo(String selectedCountry){
+       String completeURL = urlInfo1+selectedCountry+urlinfo3;
+        System.out.println("My url" + completeURL);
+       connect(completeURL);
+
     }
 
 //    public void fetchWeatherData(String cityName){
@@ -102,7 +103,7 @@ public class NetworkingService {
                         while ((read = inputStreamReader.read()) != -1) {// json integers ASCII
                             char c = (char) read;
                             jsonString += c;
-                        }// jsonString = ["Torbert, LA, United States","Torch, OH, United States","Toreboda, VG, Sweden","Torino, PI, Italy","Tornado, WV, United States","Tornillo, TX, United States","Tornio, LP, Finland","Toronto, KS, United States","Toronto, OH, United States","Toronto, ON, Canada","Toronto, SD, United States","Torquay, QL, Australia","Torrance, CA, United States","Torrance, PA, United States","torre del greco, CM, Italy","Torre Pellice, PI, Italy","Torrelles de Llobregat, CT, Spain","TORRENS CREEK, QL, Australia","Torreon, CA, Mexico","Torreon, NM, United States"]
+                        }
                         // dataTask in ios
                         final String finalJson = jsonString;
 //                        System.out.println("From Networkinnnnnnnnnnnn:"+finalJson);

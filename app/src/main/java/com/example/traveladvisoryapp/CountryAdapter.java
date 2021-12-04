@@ -44,6 +44,13 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         public CountryViewHolder(View itemView) {
             super(itemView);
             countryTextView = itemView.findViewById(R.id.country_row);
+            countryTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Country country = countryList.get(getAdapterPosition());
+                    clistner.countryClicked(country);
+                }
+            });
         }
         public TextView getCountryTextView() {
             return countryTextView;
@@ -51,8 +58,8 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
                @Override
         public void onClick(View v) {
-            Country country = countryList.get(getAdapterPosition());
-            clistner.countryClicked(country);
+//            Country country = countryList.get(getAdapterPosition());
+//            clistner.countryClicked(country);
         }
 
     }
