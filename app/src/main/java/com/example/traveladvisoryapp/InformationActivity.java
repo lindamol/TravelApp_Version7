@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.widget.TextView;
 import com.example.traveladvisoryapp.NetworkingService;
 
+import java.util.ArrayList;
+
 public class InformationActivity extends AppCompatActivity implements NetworkingService.NetworkingListener {
     JsonService jsonService;
     NetworkingService networkingService;
   TextView countryName_texview;
   String SelectedCountry ="";
+    ArrayList<CountryInfo> countryInfo = new ArrayList<CountryInfo>(0);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,12 +26,14 @@ public class InformationActivity extends AppCompatActivity implements Networking
        networkingService = ( (myApp)getApplication()).getNetworkingService();
        networkingService.listener =this;
        networkingService.fetchCountryInfo(SelectedCountry);
+       //jsonService.parseCountryInfo()
 
     }
 
     @Override
     public void APINetworkListner(String jsonString) {
-        String mystring = jsonString;
-        System.out.println("Printing JSON In InformationActivity");
+       // String countryInformation = jsonString;
+        countryInfo =  jsonService.parseCountryInfo(jsonString);
+        System.out.println("Printing JSON In InformationActivity"+"country code is" +countryInfo.toString());
     }
 }

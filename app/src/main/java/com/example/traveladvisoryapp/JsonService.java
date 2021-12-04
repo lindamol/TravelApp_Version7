@@ -24,6 +24,28 @@ public class JsonService {
         }
         return allCountriesFromAPI;
     }*/
+    public ArrayList<CountryInfo> parseCountryInfo(String jsonCountryInfo)
+    {ArrayList<CountryInfo> CountryInfoFromAPI = new ArrayList<>(0);
+        try {
+            //To get CountryCode
+            JSONObject jsonObject = new JSONObject(jsonCountryInfo);
+            JSONObject codeObject = jsonObject.getJSONObject("names");
+            String countryCode = codeObject.getString("iso2");
+            //To get ElectricityInfo
+            JSONObject electricityObject = jsonObject.getJSONObject("electricity");
+            int voltage = electricityObject.getInt("voltage");
+            int frequency = electricityObject.getInt("frequency");
+            //To get CurrencyInfo
+            JSONObject currencyObject = jsonObject.getJSONObject("currency");
+            String currencyName = currencyObject.getString("name");
+            String currencyCode = currencyObject.getString("code");
+           CountryInfoFromAPI.add(new CountryInfo(countryCode,voltage,frequency,currencyName,currencyCode));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return  CountryInfoFromAPI;
+    }
 public ArrayList<Country> parseCountriesAPIJson(String jsonCountries){
     ArrayList<Country> allCountriesFromAPI = new ArrayList<>(0);
     try {
