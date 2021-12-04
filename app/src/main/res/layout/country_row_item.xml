@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/lavender"
-    android:layout_marginBottom="5sp"
+    android:layout_marginBottom="2sp"
     app:cardCornerRadius="10sp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
         <TextView
             android:id="@+id/country_row"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textAlignment="center"
+            android:layout_width="300sp"
+            android:layout_height="50dp"
+            android:padding="5sp"
             android:text="Country"
+            android:layout_marginLeft="30sp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-            android:textSize="20sp">
-
+            android:textSize="25sp">
         </TextView>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            app:srcCompat="@drawable/img"/>
+           </LinearLayout>
+
 </androidx.cardview.widget.CardView>

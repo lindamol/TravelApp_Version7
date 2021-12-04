@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -18,12 +21,18 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
     RecyclerView countryrecyclerView;
     CountryAdapter cadapter;
     NetworkingService networkingService = new NetworkingService();
+    TextView advisorytext ;
+    Button countrybutton;
     JsonService jsonService = new JsonService();
     ArrayList<Country> countries = new ArrayList<Country>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        advisorytext = findViewById(R.id.textadvisory);
+        countrybutton = findViewById(R.id.countryviewbutton);
+        advisorytext.setVisibility(View.INVISIBLE);
+        countrybutton.setVisibility(View.INVISIBLE);
        // countries.add(new Country("India"));//check
         countryrecyclerView = findViewById(R.id.country_recyclerview);
         countryrecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -33,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
         //jsonService = ( (myApp)getApplication()).getJsonService();
         networkingService.listener = this;
         networkingService.fetchCountryData();
+
     }
 
    /* @Override
@@ -83,14 +93,11 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
 
     @Override
     public void APINetworkListner(String jsonString) {
-        //String jsonData = jsonString;
         System.out.println("Printing JSON In MAIN THREADDDDDDDDDDDDDDDDDD££££££££££££££££££");
     // Log.d("tag", jsonString);
        countries =  jsonService.parseCountriesAPIJson(jsonString);
-
          cadapter.countryList = countries;
          cadapter.notifyDataSetChanged();
 
-        //jsonService.parseCountriesAPIJson(jsonString);
-    }
+           }
 }
