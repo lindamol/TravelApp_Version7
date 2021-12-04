@@ -26,6 +26,8 @@ public class JsonService {
     }*/
     public ArrayList<CountryInfo> parseCountryInfo(String jsonCountryInfo)
     {ArrayList<CountryInfo> CountryInfoFromAPI = new ArrayList<>(0);
+    ArrayList<String> vaccnames = new ArrayList<>();
+    ArrayList<String> vaccmessages = new ArrayList<>();
         try {
             //To get CountryCode
             JSONObject jsonObject = new JSONObject(jsonCountryInfo);
@@ -39,7 +41,23 @@ public class JsonService {
             JSONObject currencyObject = jsonObject.getJSONObject("currency");
             String currencyName = currencyObject.getString("name");
             String currencyCode = currencyObject.getString("code");
-           CountryInfoFromAPI.add(new CountryInfo(countryCode,voltage,frequency,currencyName,currencyCode));
+            //To get VaccinationInfo
+            JSONArray jsonArray = jsonObject.getJSONArray("vaccinations");
+            String vaccMessage;
+            String vaccName;
+            if(jsonArray!= null){
+            for(int i = 0;i<jsonArray.length();i++){
+                //   JSONObject weatherObject = weatherArray.getJSONObject(0);
+//            String des = weatherObject.getString("description");
+                JSONObject vaccobj = jsonArray.getJSONObject(i);
+                vaccName = vaccobj.getString("name");
+                vaccMessage = vaccobj.getString("message");
+                vaccnames.add(vaccName);
+                vaccmessages.add(vaccMessage);}
+            }else {
+                 vaccMessage = "No Updates";
+                 vaccName = "No Updates";}
+            CountryInfoFromAPI.add(new CountryInfo(countryCode,voltage,frequency,currencyName,currencyCode,vaccnames,vaccmessages));
         } catch (JSONException e) {
             e.printStackTrace();
         }
