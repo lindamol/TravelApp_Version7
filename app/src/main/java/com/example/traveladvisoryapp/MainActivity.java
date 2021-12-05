@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
     NetworkingService networkingService;// = new NetworkingService();
     TextView advisorytext ;
     Button countrybutton;
+    Button favoriteButtton;
     JsonService jsonService;// = new JsonService();
     ArrayList<Country> countries = new ArrayList<Country>();
     @Override

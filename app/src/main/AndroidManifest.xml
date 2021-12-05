@@ -14,10 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelAdvisoryApp">
         <activity
-            android:name=".InformationActivity">
+            android:name=".AdvisoryActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity"/>
+            android:value=".InformationActivity" />
+    </activity>
+        <activity android:name=".InformationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".MainActivity"
