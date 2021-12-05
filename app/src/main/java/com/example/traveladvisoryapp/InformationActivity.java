@@ -3,7 +3,9 @@ package com.example.traveladvisoryapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.traveladvisoryapp.NetworkingService;
 
@@ -13,6 +15,8 @@ public class InformationActivity extends AppCompatActivity implements Networking
     JsonService jsonService;
     NetworkingService networkingService;
   TextView countryName_texview;
+  TextView message_textview;
+  ImageView flagimage;
   String SelectedCountry ="";
     ArrayList<CountryInfo> countryInfo = new ArrayList<CountryInfo>(0);
     @Override
@@ -20,6 +24,8 @@ public class InformationActivity extends AppCompatActivity implements Networking
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
         countryName_texview = findViewById(R.id.countrynametexview);
+        flagimage = findViewById(R.id.flagimage);
+        message_textview = findViewById(R.id.textmessage);
         Intent intent = getIntent();
        SelectedCountry = intent.getStringExtra("SelectedCountry");
        jsonService = ( (myApp)getApplication()).getJsonService();
@@ -34,6 +40,23 @@ public class InformationActivity extends AppCompatActivity implements Networking
     public void APINetworkListner(String jsonString) {
        // String countryInformation = jsonString;
         countryInfo =  jsonService.parseCountryInfo(jsonString);
-        System.out.println("Printing JSON In InformationActivity"+"country code is" +countryInfo.toString());
+        String vaccinename =countryInfo.get(0).vaccName.get(0);
+        String code = (countryInfo.get(0).countryCode).toLowerCase();
+
+        networkingService.listener = this;
+        networkingService.fetchFlagImage(code);
+
+        if(countryInfo.get(0).vaccName.get(0)==""){
+            System.out.println("ERORRRRRRRRRRRRRRR");
+            message_textview.setText("No val");
+        }
+        else {
+        message_textview.setText(countryInfo.get(0).vaccName.get(0)+":"+"\n"+countryInfo.get(0).vaccMessage.get(0));}
+        System.out.println("Printing JSON In InformationActivity"+"country code is" +code);
+    }
+
+    @Override
+    public void APINetworkingListerForImage(Bitmap image) {
+       flagimage.setImageBitmap(image);
     }
 }

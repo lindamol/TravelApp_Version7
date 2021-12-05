@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -99,4 +100,9 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
          cadapter.notifyDataSetChanged();
 
            }
+
+    @Override
+    public void APINetworkingListerForImage(Bitmap image) {
+
+    }
 }

@@ -26,17 +26,19 @@ public class NetworkingService {
    String countrynameurl = "https://travelbriefing.org/countries.json";
     String urlInfo1 = "https://travelbriefing.org/";
     String urlinfo3 = "?format=json";
+    String flagurl1 = "https://flagcdn.com/256x192/";
+    String flagurl2 =".png";
+    //https://flagcdn.com/120x90/in.png
     //https://travelbriefing.org/Canada?format=json
     //https://restcountries.com/v3.1/name/can
   // String url = "https://restcountries.com/v3.1/name/";
-
 
     public static final ExecutorService networkingExecutor = Executors.newFixedThreadPool(4);
     static Handler networkHander = new Handler(Looper.getMainLooper());
 
     interface NetworkingListener{
         void APINetworkListner(String jsonString);
-       // void APINetworkingListerForImage(Bitmap image);
+       void APINetworkingListerForImage(Bitmap image);
     }
 
     NetworkingListener listener;
@@ -51,35 +53,34 @@ public class NetworkingService {
        connect(completeURL);
 
     }
+    public void fetchFlagImage(String code){
+        String flagURL = flagurl1+code+flagurl2;
+        System.out.println("My flagurl" + flagURL);
+        getImageData(flagURL);
+    }
 
-//    public void fetchWeatherData(String cityName){
-//        String completeURL = weatherURL+cityName+weatherURL2;
-//        connect(completeURL);
-//    }
-
-//    public void getImageData(String icon){
-//        String completeURL = iconURL1 + icon + iconURL2;
-//        networkingExecutor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    URL urlObj = new URL(completeURL);
-//                    InputStream in = ((InputStream)urlObj.getContent());
-//                    Bitmap imageData = BitmapFactory.decodeStream(in);
-//                    networkHander.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            listener.APINetworkingListerForImage(imageData);
-//                        }
-//                    });
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
+    public void getImageData(String flagURL){
+        networkingExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL urlObj = new URL(flagURL);
+                    InputStream in = ((InputStream)urlObj.getContent());
+                    Bitmap imageData = BitmapFactory.decodeStream(in);
+                    networkHander.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.APINetworkingListerForImage(imageData);
+                        }
+                    });
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     // tor
     private void connect(String url){
