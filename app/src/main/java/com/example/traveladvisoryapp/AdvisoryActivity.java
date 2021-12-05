@@ -3,9 +3,10 @@ package com.example.traveladvisoryapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
-public class AdvisoryActivity extends AppCompatActivity {
+public class AdvisoryActivity extends AppCompatActivity implements NetworkingService.NetworkingListener {
     JsonService jsonService;
     NetworkingService networkingService;
    String countryCode;
@@ -17,6 +18,16 @@ public class AdvisoryActivity extends AppCompatActivity {
         countryCode = intent.getStringExtra("Countrycode");
         jsonService = ( (myApp)getApplication()).getJsonService();
         networkingService = ( (myApp)getApplication()).getNetworkingService();
-        //networkingService.listener =this;
+        networkingService.listener =this;
+    }
+
+    @Override
+    public void APINetworkListner(String jsonString) {
+        networkingService.fetchRiskScore(countryCode);
+    }
+
+    @Override
+    public void APINetworkingListerForImage(Bitmap image) {
+
     }
 }
