@@ -1,5 +1,7 @@
 package com.example.traveladvisoryapp;
 
+import android.graphics.Bitmap;
+
 public class Country {
     private String countryName;
 

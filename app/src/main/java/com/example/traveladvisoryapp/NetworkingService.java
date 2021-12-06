@@ -27,6 +27,7 @@ public class NetworkingService {
     String urlInfo1 = "https://travelbriefing.org/";
     String urlinfo3 = "?format=json";
     String flagurl1 = "https://flagcdn.com/256x192/";
+    //	https://flagcdn.com/80x60/in.png
     String flagurl2 =".png";
     String adviseUrl = "https://www.travel-advisory.info/api?countrycode=";
     //https://flagcdn.com/120x90/in.png
