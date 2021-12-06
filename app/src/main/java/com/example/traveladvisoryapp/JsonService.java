@@ -84,7 +84,26 @@ public ArrayList<Country> parseCountriesAPIJson(String jsonCountries){
 
     return allCountriesFromAPI;
 }
+    public ArrayList<AdvisoryInfo> parseAdvisoryInfo(String jsonAdvisoryInfo, String countryCode){
+        ArrayList<AdvisoryInfo> advisoryData = new ArrayList<>(0);
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(jsonAdvisoryInfo);
+            JSONObject dataObject = jsonObject.getJSONObject("data");//Go inside data
+            JSONObject codeObject = dataObject.getJSONObject(countryCode);//Go inside code
+            JSONObject adviseObject = codeObject.getJSONObject("advisory");//Go inside advisory
+            double score = adviseObject.getDouble("score");//Get score
+            String message = adviseObject.getString("message"); // Get message
+            String date = adviseObject.getString("updated");//Get date
+            advisoryData.add(new AdvisoryInfo(score,message,date));//Add to Arraylist
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+
+
+        return  advisoryData;
+    }
 //    public WeatherData parseWeatherAPIData(String jsonWeatherString){
 //        WeatherData weatherData = new WeatherData();
 //        try {

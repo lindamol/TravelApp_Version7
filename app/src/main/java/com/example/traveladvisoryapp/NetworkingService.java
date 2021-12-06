@@ -28,7 +28,7 @@ public class NetworkingService {
     String urlinfo3 = "?format=json";
     String flagurl1 = "https://flagcdn.com/256x192/";
     String flagurl2 =".png";
-    String scoreurl = "https://www.travel-advisory.info/api?countrycode=";
+    String adviseUrl = "https://www.travel-advisory.info/api?countrycode=";
     //https://flagcdn.com/120x90/in.png
     //https://travelbriefing.org/Canada?format=jsons
     //https://restcountries.com/v3.1/name/can
@@ -59,10 +59,11 @@ public class NetworkingService {
         System.out.println("My flagurl" + flagURL);
         getImageData(flagURL);
     }
-    public void fetchRiskScore(String code)
+    public void fetchAdvisoryInfo(String code)
     {
-        String riskScoreUrl = scoreurl + code;
-        connect(riskScoreUrl);
+        String completeurl = adviseUrl + code;
+        System.out.println("My advisory url " + completeurl);
+        connect(completeurl);
     }
     public void getImageData(String flagURL){
         networkingExecutor.execute(new Runnable() {
