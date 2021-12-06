@@ -22,7 +22,8 @@ public class NetworkingService {
 //    String iconURL1 = "https://openweathermap.org/img/wn/";
 //    String iconURL2 = "@2x.png";
     //https://travelbriefing.org/countries.json
-
+    //Europe : https://api.first.org/data/v1/countries?region=Europe&limit=all&pretty=true
+   String europeanCountriesURL = "https://api.first.org/data/v1/countries?region=Europe&limit=all&pretty=true";
    String countrynameurl = "https://travelbriefing.org/countries.json";
     String urlInfo1 = "https://travelbriefing.org/";
     String urlinfo3 = "?format=json";
