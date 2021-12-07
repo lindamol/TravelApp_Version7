@@ -57,8 +57,8 @@ public class JsonService {
 public ArrayList<Country> parseCountriesAPIJson(String jsonCountries){
     ArrayList<Country> allCountriesFromAPI = new ArrayList<>(0);
     try {
-        JSONArray jsonArray = new JSONArray(jsonCountries);//jsonArray.length()
-        for (int i = 0 ; i< 50; i++){ // Iterate through the whole array
+        JSONArray jsonArray = new JSONArray(jsonCountries);//
+        for (int i = 0 ; i< jsonArray.length(); i++){ // Iterate through the whole array
             JSONObject jsonObject = jsonArray.getJSONObject(i);//From inside array I need to get each object
             String countryName = jsonObject.getString("name");//From each object,extract the string using key
             allCountriesFromAPI.add(new Country(countryName)); //Add to the ArrayList

@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
 
     @Override
     public void APINetworkListner(String jsonString) {
-        System.out.println("Printing JSON In MAIN THREADDDDDDDDDDDDDDDDDD££££££££££££££££££"+"new \uD83C\uDDE8\uD83C\uDDE6");
+        System.out.println("Printing JSON In MAIN THREADDDDDDDDDDDDDDDDDD££££££££££££££££££");
         //U+1F1E8 U+1F1E6
     // Log.d("tag", jsonString);
        countries =  jsonService.parseCountriesAPIJson(jsonString);
