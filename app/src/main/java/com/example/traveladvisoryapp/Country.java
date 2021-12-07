@@ -2,8 +2,14 @@ package com.example.traveladvisoryapp;
 
 import android.graphics.Bitmap;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity//Tablename is Country
 public class Country {
-    private String countryName;
+    @PrimaryKey(autoGenerate = true)
+    public int countryID;//col1
+    public String countryName; //col2
 
     public Country() {
     }
@@ -27,7 +33,4 @@ public class Country {
                 '}';
     }
 
-//    private String countryCode;
-//    private String currency;
-//    private String Vaccination;
 }
