@@ -14,7 +14,7 @@ public class DataBaseService {
     static CountryDataBase db;
     static ExecutorService databaseExecuter = Executors.newFixedThreadPool(4);
     Handler db_handler = new Handler(Looper.getMainLooper());
-//To create DB
+//To create  DB and connect if already exists
     private static void BuildInstance(Context context){
     db = Room.databaseBuilder(context,CountryDataBase.class,"country_db").build();
 }

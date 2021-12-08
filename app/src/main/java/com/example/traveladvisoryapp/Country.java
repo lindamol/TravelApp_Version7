@@ -11,8 +11,8 @@ public class Country {
     public int countryID;//col1
     public String countryName; //col2
 
-    public Country() {
-    }
+//    public Country() {
+//    }
 
     public Country(String countryName) {
         this.countryName = countryName;

@@ -46,8 +46,9 @@ public class NetworkingService {
 
     NetworkingListener listener;
     public void fetchCountryData(){
-        String completeURL = countrynameurl;
+       String completeURL = countrynameurl;
        //System.out.println("My url" + countrynameurl);
+       // String completeURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=c896c1207ccf465da33cd952861700f9&diet=vegetarian&intolerances=gluten&type=breakfast";
         connect(completeURL);
     }
     public void fetchCountryInfo(String selectedCountry){
@@ -92,7 +93,8 @@ public class NetworkingService {
 
     // tor
     private void connect(String url){
-        networkingExecutor.execute(new Runnable() {
+       //url1 = "https://api.spoonacular.com/recipes/complexSearch?apiKey=c896c1207ccf465da33cd952861700f9&diet=vegetarian&intolerances=gluten&type=breakfast";
+             networkingExecutor.execute(new Runnable() {
             String jsonString = "";
             @Override
             public void run() {

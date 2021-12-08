@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -31,10 +32,10 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        advisorytext = findViewById(R.id.textadvisory);
-        countrybutton = findViewById(R.id.countryviewbutton);
-        advisorytext.setVisibility(View.INVISIBLE);
-        countrybutton.setVisibility(View.INVISIBLE);
+        //advisorytext = findViewById(R.id.textadvisory);
+        //countrybutton = findViewById(R.id.countryviewbutton);
+//        advisorytext.setVisibility(View.INVISIBLE);
+//        countrybutton.setVisibility(View.INVISIBLE);
         jsonService = ( (myApp)getApplication()).getJsonService();
         networkingService = ( (myApp)getApplication()).getNetworkingService();
        // countries.add(new Country("India"));//check
@@ -46,44 +47,46 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
         networkingService.fetchCountryData();
     }
 
-   /* @Override
+   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_search,menu);
         MenuItem searchViewMenuItem = menu.findItem(R.id.search);
        androidx.appcompat.widget.SearchView searchView = (SearchView) searchViewMenuItem.getActionView();
+       searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
        String searchText = searchView.getQuery().toString();
-        if(!searchText.isEmpty())//check countryname
-            {searchView.setIconified(false);
-             searchView.setQuery(searchText,false);}
-        searchView.setQueryHint("Search country name");
+//        if(!searchText.isEmpty())//check countryname
+//            {searchView.setIconified(false);
+//             searchView.setQuery(searchText,false);}
+       // searchView.setQueryHint("Search country name");
        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d("query", query);//
-                return true;
+                //Log.d("query", query);//
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.d("query change", newText);
-                if(newText.length()>=3){
+                //cadapter.getFilter().filter(newText);
+                if(newText.length()>=1){
                     // seach for country
-                   networkingService.fetchCountryData();
-                    System.out.println("Going to fetchdata");
-                   // cadapter.countryList = countries;
-                    cadapter.notifyDataSetChanged();
+                   cadapter.getFilter().filter(newText);
+                    //System.out.println("Going to fetchdata");
+                   cadapter.countryList = countries;
+                   cadapter.notifyDataSetChanged();
                 }
                 else{
                     cadapter.countryList = new ArrayList<>(0);
                     cadapter.notifyDataSetChanged();
                 }
-                return false;
+                return true;
             }
         });
 
        return true;
-    }*/
+    }
 
     @Override
     public void countryClicked(Country selectedCountry) {

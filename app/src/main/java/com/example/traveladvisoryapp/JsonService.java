@@ -35,7 +35,7 @@ public class JsonService {
                 //   JSONObject weatherObject = weatherArray.getJSONObject(0);
 //            String des = weatherObject.getString("description");
                 JSONObject vaccobj = jsonArray.getJSONObject(i);
-                vaccName = vaccobj.getString("name");
+                vaccName = vaccobj.getString("name");//VaccinationInfo
                 vaccMessage = vaccobj.getString("message");
                 vaccnames.add(vaccName);
                 vaccmessages.add(vaccMessage);}
