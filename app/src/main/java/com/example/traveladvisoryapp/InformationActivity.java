@@ -55,27 +55,19 @@ public class InformationActivity extends AppCompatActivity implements Networking
               {
         countryInfo =  jsonService.parseCountryInfo(jsonString);
 //        String vaccinename =countryInfo.get(0).vaccName.get(0);
-//        code = (countryInfo.get(0).countryCode).toLowerCase();
+        code = (countryInfo.get(0).countryCode).toLowerCase();
              vaccInfo = countryInfo.get(0).getVaccInfo();
-             adapter.countryInfoList= vaccInfo;
-             adapter.notifyDataSetChanged();
-
-         networkingService.listener = this;
+             networkingService.listener = this;
         networkingService.fetchFlagImage(code);
+        adapter.countryInfoList= vaccInfo;
+        adapter.notifyDataSetChanged();
          }
-       if(countryInfo.get(0).vaccName.get(0)==""){
-//            System.out.println("ERORRRRRRRRRRRRRRR");
-           // message_textview.setText("No val");
-        }
-        else {
-       // message_textview.setText(countryInfo.get(0).vaccInfo.get(0));
-        }
-        //System.out.println("Printing JSON In InformationActivity"+"country code is" +code);
     }
 
     @Override
     public void APINetworkingListerForImage(Bitmap image) {
-       flagimage.setImageBitmap(image);
+
+        flagimage.setImageBitmap(image);
     }
 
     public void moreAdvisoryOnclick(View view) {
