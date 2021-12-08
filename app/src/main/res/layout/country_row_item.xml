@@ -8,7 +8,7 @@
     android:backgroundTint="@color/trans"
     android:layout_marginBottom="2sp"
     app:cardCornerRadius="20sp">
-    <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -16,12 +16,11 @@
         <TextView
             android:id="@+id/country_row"
             android:layout_width="300sp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="5sp"
             android:text="Country"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
             android:textColor="@color/white"
-            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintHorizontal_bias="0.0"

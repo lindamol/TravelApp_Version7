@@ -1,6 +1,8 @@
 package com.example.traveladvisoryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,28 +18,33 @@ import java.util.ArrayList;
 public class InformationActivity extends AppCompatActivity implements NetworkingService.NetworkingListener {
     JsonService jsonService;
     NetworkingService networkingService;
+    RecyclerView recyclerViewInfo;
   TextView countryName_texview;
-  TextView message_textview;
   ImageView flagimage;
   Button moreadviseButton;
   String SelectedCountry ="";
     Boolean firstfetch = true;
     String code;
+    InfoAdapter adapter;
     ArrayList<CountryInfo> countryInfo = new ArrayList<CountryInfo>(0);
+    ArrayList<String> vaccInfo = new ArrayList<>(0);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
         countryName_texview = findViewById(R.id.countrynametexview);
         flagimage = findViewById(R.id.flagimage);
-        message_textview = findViewById(R.id.textmessage);
         moreadviseButton = findViewById(R.id.moreAdvisory);
+        recyclerViewInfo = findViewById(R.id.info_recyclerview);
+        recyclerViewInfo.setLayoutManager(new LinearLayoutManager(this));
         Intent intent = getIntent();
-       SelectedCountry = intent.getStringExtra("SelectedCountry");
-       jsonService = ( (myApp)getApplication()).getJsonService();
-       networkingService = ( (myApp)getApplication()).getNetworkingService();
-       networkingService.listener =this;
-       networkingService.fetchCountryInfo(SelectedCountry);
+        SelectedCountry = intent.getStringExtra("SelectedCountry");
+        jsonService = ( (myApp)getApplication()).getJsonService();
+        networkingService = ( (myApp)getApplication()).getNetworkingService();
+        networkingService.listener =this;
+        networkingService.fetchCountryInfo(SelectedCountry);
+        adapter = new InfoAdapter(this,vaccInfo);
+       recyclerViewInfo.setAdapter(adapter);
 
        //jsonService.parseCountryInfo()
 
@@ -45,22 +52,25 @@ public class InformationActivity extends AppCompatActivity implements Networking
 
     @Override
     public void APINetworkListner(String jsonString) {
-       // String countryInformation = jsonString;
-
-         {
+              {
         countryInfo =  jsonService.parseCountryInfo(jsonString);
-        String vaccinename =countryInfo.get(0).vaccName.get(0);
-        code = (countryInfo.get(0).countryCode).toLowerCase();
-        networkingService.listener = this;
+//        String vaccinename =countryInfo.get(0).vaccName.get(0);
+//        code = (countryInfo.get(0).countryCode).toLowerCase();
+             vaccInfo = countryInfo.get(0).getVaccInfo();
+             adapter.countryInfoList= vaccInfo;
+             adapter.notifyDataSetChanged();
+
+         networkingService.listener = this;
         networkingService.fetchFlagImage(code);
          }
        if(countryInfo.get(0).vaccName.get(0)==""){
-            System.out.println("ERORRRRRRRRRRRRRRR");
-            message_textview.setText("No val");
+//            System.out.println("ERORRRRRRRRRRRRRRR");
+           // message_textview.setText("No val");
         }
         else {
-        message_textview.setText(countryInfo.get(0).vaccName.get(0)+":"+"\n"+countryInfo.get(0).vaccMessage.get(0));}
-        System.out.println("Printing JSON In InformationActivity"+"country code is" +code);
+       // message_textview.setText(countryInfo.get(0).vaccInfo.get(0));
+        }
+        //System.out.println("Printing JSON In InformationActivity"+"country code is" +code);
     }
 
     @Override

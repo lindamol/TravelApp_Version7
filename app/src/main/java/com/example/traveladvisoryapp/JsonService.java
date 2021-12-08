@@ -13,6 +13,7 @@ public class JsonService {
     {ArrayList<CountryInfo> CountryInfoFromAPI = new ArrayList<>(0);
     ArrayList<String> vaccnames = new ArrayList<>(0);
     ArrayList<String> vaccmessages = new ArrayList<>(0);
+        ArrayList<String> vaccInfoList = new ArrayList<>(0);
         try {
             //To get CountryCode
             JSONObject jsonObject = new JSONObject(jsonCountryInfo);
@@ -20,8 +21,8 @@ public class JsonService {
             String countryCode = codeObject.getString("iso2");
             //To get ElectricityInfo
             JSONObject electricityObject = jsonObject.getJSONObject("electricity");
-            int voltage = electricityObject.getInt("voltage");
-            int frequency = electricityObject.getInt("frequency");
+            String voltage = electricityObject.getString("voltage");
+            String frequency = electricityObject.getString("frequency");
             //To get CurrencyInfo
             JSONObject currencyObject = jsonObject.getJSONObject("currency");
             String currencyName = currencyObject.getString("name");
@@ -29,7 +30,8 @@ public class JsonService {
             //To get VaccinationInfo
             JSONArray jsonArray = jsonObject.getJSONArray("vaccinations");
             String vaccMessage;
-            String vaccName;
+            String vaccName="";
+            String vaccInfo;
             if(jsonArray.length()>0){
             for(int i = 0;i<jsonArray.length();i++){
                 //   JSONObject weatherObject = weatherArray.getJSONObject(0);
@@ -37,17 +39,34 @@ public class JsonService {
                 JSONObject vaccobj = jsonArray.getJSONObject(i);
                 vaccName = vaccobj.getString("name");//VaccinationInfo
                 vaccMessage = vaccobj.getString("message");
+                vaccInfo = vaccName +":"+"\n"+vaccMessage;
+                vaccInfoList.add(vaccInfo);
                 vaccnames.add(vaccName);
                 vaccmessages.add(vaccMessage);}
-                //CountryInfoFromAPI.add(new CountryInfo(countryCode,voltage,frequency,currencyName,currencyCode,vaccnames,vaccmessages));
+               if(vaccName.length()==0){
+                   vaccMessage = "No Updates";
+                   vaccName = "No Updates";
+                   vaccInfo ="No Information Available."+"\n" + " Please follow regular Guidelines";
+                   vaccnames.add(vaccName);
+                   vaccmessages.add(vaccMessage);
+                   vaccInfoList.add(vaccInfo);
+               }
+               CountryInfoFromAPI.add(new CountryInfo(countryCode,voltage,frequency,currencyName,currencyCode,
+                        vaccnames,vaccmessages,vaccInfoList));
+
             }else {
-                 vaccMessage = "No Updates";
-                 vaccName = "No Updates";
+                 vaccMessage = "No Updates"; vaccName = "No Updates";
+                 vaccInfo ="No Information Available."+"\n" + " Please follow regular Guidelines";
+                 countryCode = "nil";voltage = "nil";frequency ="nil";
+                 currencyName = "nil"; currencyCode = "nil";
                  vaccnames.add(vaccName);
                  vaccmessages.add(vaccMessage);
-               // CountryInfoFromAPI.add(new CountryInfo(countryCode,voltage,frequency,currencyName,currencyCode,vaccnames,vaccmessages));
+                 vaccInfoList.add(vaccInfo);
+                CountryInfoFromAPI.add(new CountryInfo(countryCode,voltage,frequency,currencyName,currencyCode,
+                        vaccnames,vaccmessages,vaccInfoList));
             }
-            CountryInfoFromAPI.add(new CountryInfo(countryCode,voltage,frequency,currencyName,currencyCode,vaccnames,vaccmessages));
+//            CountryInfoFromAPI.add(new CountryInfo(countryCode,voltage,frequency,currencyName,currencyCode,
+//                    vaccnames,vaccmessages,vaccInfoList));
         } catch (JSONException e) {
             e.printStackTrace();
         }

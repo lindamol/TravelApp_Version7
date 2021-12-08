@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
     Button favoriteButtton;
     JsonService jsonService;// = new JsonService();
     ArrayList<Country> countries = new ArrayList<Country>();
+    ArrayList<Country> updatecountries = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
 //        if(!searchText.isEmpty())//check countryname
 //            {searchView.setIconified(false);
 //             searchView.setQuery(searchText,false);}
-       // searchView.setQueryHint("Search country name");
+        searchView.setQueryHint("Search country name");
        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -78,10 +79,12 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
                    cadapter.notifyDataSetChanged();
                 }
                 else{
-                    cadapter.countryList = new ArrayList<>(0);
+                   // cadapter.countryList = new ArrayList<>(0);
+                    cadapter.countryList = countries;
                     cadapter.notifyDataSetChanged();
                 }
-                return true;
+
+                return false;
             }
         });
 
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
         //U+1F1E8 U+1F1E6
     // Log.d("tag", jsonString);
        countries =  jsonService.parseCountriesAPIJson(jsonString);
+       updatecountries =countries;
          cadapter.countryList = countries;
          cadapter.notifyDataSetChanged();
 
