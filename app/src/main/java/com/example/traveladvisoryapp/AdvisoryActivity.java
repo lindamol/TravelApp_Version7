@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -12,12 +13,15 @@ public class AdvisoryActivity extends AppCompatActivity implements NetworkingSer
     JsonService jsonService;
     NetworkingService networkingService;
    String countryCode;
+   TextView advisory_textview,risk_textview;
     ArrayList<AdvisoryInfo> advisoryInfo = new ArrayList<AdvisoryInfo>(0);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advisory);
         Intent intent = getIntent();
+        advisory_textview = findViewById(R.id.advisory_text);
+        risk_textview = findViewById(R.id.riskscore_textview);
         countryCode = intent.getStringExtra("Countrycode");
         jsonService = ( (myApp)getApplication()).getJsonService();
         networkingService = ( (myApp)getApplication()).getNetworkingService();
@@ -31,6 +35,8 @@ public class AdvisoryActivity extends AppCompatActivity implements NetworkingSer
         advisoryInfo = jsonService.parseAdvisoryInfo(jsonString,code);
         String message = advisoryInfo.get(0).getAdvisoryMessage();
         System.out.println("This is my message from final Actvity:" +message);
+        advisory_textview.setText(advisoryInfo.get(0).getAdvisoryMessage()+"\n"+"Updated on:"+"\n"+advisoryInfo.get(0).getDate());
+        risk_textview.setText("Risk Score: " +advisoryInfo.get(0).getRiskScore()+"");
     }
 
     @Override

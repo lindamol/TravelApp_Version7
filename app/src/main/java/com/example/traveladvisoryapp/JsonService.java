@@ -57,8 +57,8 @@ public class JsonService {
             }else {
                  vaccMessage = "No Updates"; vaccName = "No Updates";
                  vaccInfo ="No Information Available."+"\n" + " Please follow regular Guidelines";
-                 countryCode = countryCode;voltage = "nil";frequency ="nil";
-                 currencyName = currencyName; currencyCode = "nil";
+                 countryCode = countryCode;voltage = voltage;frequency =frequency;
+                 currencyName = currencyName; currencyCode = currencyCode;
                  vaccnames.add(vaccName);
                  vaccmessages.add(vaccMessage);
                  vaccInfoList.add(vaccInfo);

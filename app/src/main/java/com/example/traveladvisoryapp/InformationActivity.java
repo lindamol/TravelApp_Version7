@@ -19,7 +19,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
     JsonService jsonService;
     NetworkingService networkingService;
     RecyclerView recyclerViewInfo;
-  TextView countryName_texview;
+  TextView countryName_texview,elect_textview,currency_textView;
   ImageView flagimage;
   Button moreadviseButton;
   String SelectedCountry ="";
@@ -34,6 +34,8 @@ public class InformationActivity extends AppCompatActivity implements Networking
         setContentView(R.layout.activity_information);
         countryName_texview = findViewById(R.id.countrynametexview);
         flagimage = findViewById(R.id.flagimage);
+        currency_textView = findViewById(R.id.currency_textView);
+        elect_textview = findViewById(R.id.electricitytextView);
         moreadviseButton = findViewById(R.id.moreAdvisory);
         recyclerViewInfo = findViewById(R.id.info_recyclerview);
         recyclerViewInfo.setLayoutManager(new LinearLayoutManager(this));
@@ -44,7 +46,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
         networkingService.listener =this;
         networkingService.fetchCountryInfo(SelectedCountry);
         adapter = new InfoAdapter(this,vaccInfo);
-       recyclerViewInfo.setAdapter(adapter);
+        recyclerViewInfo.setAdapter(adapter);
 
        //jsonService.parseCountryInfo()
 
@@ -58,21 +60,23 @@ public class InformationActivity extends AppCompatActivity implements Networking
         code = (countryInfo.get(0).countryCode).toLowerCase();
              vaccInfo = countryInfo.get(0).getVaccInfo();
              networkingService.listener = this;
-        networkingService.fetchFlagImage(code);
-        adapter.countryInfoList= vaccInfo;
+          networkingService.fetchFlagImage(code);
+         adapter.countryInfoList= vaccInfo;
         adapter.notifyDataSetChanged();
-         }
+        setValues();
+              }
     }
-
     @Override
-    public void APINetworkingListerForImage(Bitmap image) {
-
-        flagimage.setImageBitmap(image);
-    }
+    public void APINetworkingListerForImage(Bitmap image) {flagimage.setImageBitmap(image); }
 
     public void moreAdvisoryOnclick(View view) {
         Intent intent = new Intent(this,AdvisoryActivity.class);
         intent.putExtra("Countrycode",code);
         startActivity(intent);
+    }
+    public void setValues(){
+        countryName_texview.setText(SelectedCountry);
+        elect_textview.setText(countryInfo.get(0).getVoltage()+" V"+"\n"+countryInfo.get(0).getFrequency()+" Hz");
+        currency_textView.setText(countryInfo.get(0).currencyName+" "+countryInfo.get(0).getCurrencyCode());
     }
 }
