@@ -11,6 +11,12 @@ public class Country {
     public int countryID;//col1
     public String countryName; //col2
 
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public String countryCode;//col3
+
 //    public Country() {
 //    }
 
