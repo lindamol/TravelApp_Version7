@@ -79,6 +79,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
             Toast.makeText(this, "Toggle ,True favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
            dbService.insertNewCountry(country);
         }else{
+            dbService.deleteCountryname(SelectedCountry);
             Toast.makeText(this, "Toggle ,Fase favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
         }
 
