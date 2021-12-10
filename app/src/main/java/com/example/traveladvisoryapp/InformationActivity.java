@@ -32,6 +32,8 @@ public class InformationActivity extends AppCompatActivity implements Networking
     InfoAdapter adapter;
     ArrayList<CountryInfo> countryInfo = new ArrayList<CountryInfo>(0);
     ArrayList<String> vaccInfo = new ArrayList<>(0);
+    DataBaseService dbService;
+    CountryDataBase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,9 @@ public class InformationActivity extends AppCompatActivity implements Networking
         recyclerViewInfo = findViewById(R.id.info_recyclerview);
         recyclerViewInfo.setLayoutManager(new LinearLayoutManager(this));
         Intent intent = getIntent();
+        //DataBase
+        db = DataBaseService.getDBInstance(this);
+        dbService = ((myApp)getApplication()).getDataBaseService();
         SelectedCountry = intent.getStringExtra("SelectedCountry");
         if (savedInstanceState != null) {
             //Restore value of members from saved state
@@ -69,7 +74,10 @@ public class InformationActivity extends AppCompatActivity implements Networking
     void checkfavouriteToggle(){
         if(favouriteTogglebutton.isChecked())
         {
+            Country country = new Country(SelectedCountry);
+            country.countryCode = code;
             Toast.makeText(this, "Toggle ,True favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
+           dbService.insertNewCountry(country);
         }else{
             Toast.makeText(this, "Toggle ,Fase favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
         }

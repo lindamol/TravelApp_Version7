@@ -13,30 +13,25 @@ import java.util.concurrent.Executors;
 //This class is created to create the db and access it
 public class DataBaseService {
     static CountryDataBase db;
-    static ExecutorService databaseExecuter = Executors.newFixedThreadPool(4);
+    ExecutorService databaseExecuter = Executors.newFixedThreadPool(4);
     Handler db_handler = new Handler(Looper.getMainLooper());
     public interface DatabaseListener {
         void databaseAllCountriesListener(List<Country> list);
     }
-
     public DatabaseListener listener;
-//To create  DB and connect if already exists
-    private static void BuildInstance(Context context){
-    db = Room.databaseBuilder(context,CountryDataBase.class,"country_db").build();
-}
-//To access Instance
- public static CountryDataBase getdbInstance(Context context){
-    if(db== null)
-         { //Here we created the object for manager and access the db object with the manager object
-             //create Db only if the db is null.Here we cannot access the db directly,only with the help of db manager
-//             DataBaseManager m = new DataBaseManager(context) ;
-//            db = m.db;
-             //db = new DataBaseManager(context).db;
-            BuildInstance(context);//Instead of constructor we can create a method and access
+
+    // Create only once and connect
+    private static void BuildDBInstance (Context context) {
+        db = Room.databaseBuilder(context,CountryDataBase.class,"country_db").build();
     }
-   return db;
- }
- public static void insertNewCountry(Country c){
+    //Getter and setter for Database
+    public static CountryDataBase getDBInstance(Context context){
+        if (db == null){
+            BuildDBInstance(context);//Create db
+        }
+        return db;
+    }
+ public void insertNewCountry(Country c){
         databaseExecuter.execute(new Runnable() {
             @Override
             public void run() {
@@ -45,6 +40,7 @@ public class DataBaseService {
             }
         });
  }
+
     public void getAllCountries(){
         databaseExecuter.execute(new Runnable() {
             @Override

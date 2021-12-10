@@ -18,4 +18,6 @@ public interface CountryDAO {
     void updateCountry(Country toupdatecountry);
     @Query("SELECT * FROM Country")
     List<Country> getAllCountries();
+  @Query("SELECT * FROM Country WHERE countryName = :name ")
+   List<Country> getallfromcountryname(String name);
 }

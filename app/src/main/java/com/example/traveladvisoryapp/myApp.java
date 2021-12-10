@@ -6,7 +6,6 @@ public class myApp extends Application {
 
     private NetworkingService networkingService = new NetworkingService();
 
-
     public NetworkingService getNetworkingService() {
         return networkingService;
     }
@@ -15,5 +14,10 @@ public class myApp extends Application {
 
     public JsonService getJsonService() {
         return jsonService;
+    }
+    private DataBaseService dataBaseService = new DataBaseService();
+
+    public DataBaseService getDataBaseService() {
+        return dataBaseService;
     }
 }
