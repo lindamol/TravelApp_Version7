@@ -10,12 +10,12 @@ public class Country {
     @PrimaryKey(autoGenerate = true)
     public int countryID;//col1
     public String countryName; //col2
+    public String countryCode;//col3
 
     public String getCountryCode() {
         return countryCode;
     }
 
-    public String countryCode;//col3
 
 //    public Country() {
 //    }

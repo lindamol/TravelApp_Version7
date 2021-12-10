@@ -6,6 +6,7 @@ import android.os.Looper;
 
 import androidx.room.Room;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -14,6 +15,11 @@ public class DataBaseService {
     static CountryDataBase db;
     static ExecutorService databaseExecuter = Executors.newFixedThreadPool(4);
     Handler db_handler = new Handler(Looper.getMainLooper());
+    public interface DatabaseListener {
+        void databaseAllCountriesListener(List<Country> list);
+    }
+
+    public DatabaseListener listener;
 //To create  DB and connect if already exists
     private static void BuildInstance(Context context){
     db = Room.databaseBuilder(context,CountryDataBase.class,"country_db").build();
@@ -39,5 +45,22 @@ public class DataBaseService {
             }
         });
  }
+    public void getAllCountries(){
+        databaseExecuter.execute(new Runnable() {
+            @Override
+            public void run() {
+                //List<Donation> list =  db.getDonationDAO().getAll();
+                List<Country> list =  db.getCountryDAO().getAllCountries();
+                db_handler.post(new Runnable() {
+                    @Override//go to the interface and wait
+                    public void run() {
+                        listener.databaseAllCountriesListener(list);
+                    }
+                });
+
+            }
+        });
+
+    }
 
 }
