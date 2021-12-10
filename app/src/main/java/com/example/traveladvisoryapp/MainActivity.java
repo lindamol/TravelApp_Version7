@@ -40,12 +40,23 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
         jsonService = ( (myApp)getApplication()).getJsonService();
         networkingService = ( (myApp)getApplication()).getNetworkingService();
        // countries.add(new Country("India"));//check
+        favoriteButtton = findViewById(R.id.favoriteButton);
         countryrecyclerView = findViewById(R.id.country_recyclerview);
         countryrecyclerView.setLayoutManager(new LinearLayoutManager(this));
         cadapter = new CountryAdapter(this,countries);
         countryrecyclerView.setAdapter(cadapter);
         networkingService.listener = this;
         networkingService.fetchCountryData();
+        favoriteButtton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFavoriteActivity();
+            }
+        });
+    }
+    void openFavoriteActivity(){
+        Intent intent = new Intent(this,FavouriteActivity.class);
+        startActivity(intent);
     }
 
    @Override
