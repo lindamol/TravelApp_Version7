@@ -80,7 +80,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
         if(favouriteTogglebutton.isChecked())
         {
             countryObj.setCountryName(SelectedCountry);
-            countryObj.countryCode = code;
+            countryObj.setCountryCode(code);
             Toast.makeText(this, "Toggle ,True favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
            dbService.insertNewCountry(countryObj);
 
@@ -129,7 +129,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
     @Override
     public void databaseAllCountriesListener(List<Country> list) {
         listofcountries = new ArrayList<>(list);
-        System.out.println("These are my countryes in DBBBBB" + listofcountries.get(2).countryCode);
-        System.out.println("These are my code in DBBBBB" + listofcountries.get(0).countryCode);
+       // System.out.println("These are my countryes in DBBBBB" + listofcountries.get(2).countryCode);
+        System.out.println("These are my code in DBBBBB" + listofcountries);
     }
 }

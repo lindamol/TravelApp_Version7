@@ -12,9 +12,13 @@ public class Country {
     @PrimaryKey(autoGenerate = true)
     public int countryID;//col1
     public String countryName; //col2
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
     public String countryCode;//col3
- ArrayList<Country> list;
-    public String getCountryCode() {
+     public String getCountryCode() {
         return countryCode;
     }
 
@@ -24,6 +28,10 @@ public class Country {
 
     public Country(String countryName) {
         this.countryName = countryName;
+    }
+    public Country(String countryName, String countryCode) {
+        this.countryName = countryName;
+        this.countryCode = countryCode;
     }
 
       public String getCountryName() {
