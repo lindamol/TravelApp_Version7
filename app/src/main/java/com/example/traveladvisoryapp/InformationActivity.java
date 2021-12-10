@@ -54,6 +54,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
         //DataBase
         db = DataBaseService.getDBInstance(this);
         dbService = ((myApp)getApplication()).getDataBaseService();
+        dbService.listener = this;
         SelectedCountry = intent.getStringExtra("SelectedCountry");
         if (savedInstanceState != null) {
             //Restore value of members from saved state
@@ -128,6 +129,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
     @Override
     public void databaseAllCountriesListener(List<Country> list) {
         listofcountries = new ArrayList<>(list);
-        System.out.println("These are my countryes in DBBBBB" + listofcountries);
+        System.out.println("These are my countryes in DBBBBB" + listofcountries.get(2).countryCode);
+        System.out.println("These are my code in DBBBBB" + listofcountries.get(0).countryCode);
     }
 }

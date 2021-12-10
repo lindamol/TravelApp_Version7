@@ -103,10 +103,7 @@ public ArrayList<Country> parseCountriesAPIJson(String jsonCountries){
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-
-        return  advisoryData;
+       return  advisoryData;
     }
 }
 

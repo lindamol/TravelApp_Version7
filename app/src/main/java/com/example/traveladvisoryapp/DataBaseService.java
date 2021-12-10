@@ -61,7 +61,6 @@ public class DataBaseService {
                         listener.databaseAllCountriesListener(list);
                     }
                 });
-
             }
         });
 
