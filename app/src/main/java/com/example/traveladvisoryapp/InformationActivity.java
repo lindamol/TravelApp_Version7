@@ -17,8 +17,9 @@ import android.widget.ToggleButton;
 import com.example.traveladvisoryapp.NetworkingService;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class InformationActivity extends AppCompatActivity implements NetworkingService.NetworkingListener {
+public class InformationActivity extends AppCompatActivity implements NetworkingService.NetworkingListener,DataBaseService.DatabaseListener {
     JsonService jsonService;
     NetworkingService networkingService;
     RecyclerView recyclerViewInfo;
@@ -34,6 +35,8 @@ public class InformationActivity extends AppCompatActivity implements Networking
     ArrayList<String> vaccInfo = new ArrayList<>(0);
     DataBaseService dbService;
     CountryDataBase db;
+    Country countryObj;
+    ArrayList<Country> listofcountries;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
         favouriteTogglebutton = findViewById(R.id.toggleFavourite);
         moreadviseButton = findViewById(R.id.moreAdvisory);
         recyclerViewInfo = findViewById(R.id.info_recyclerview);
+        countryObj = new Country();
         recyclerViewInfo.setLayoutManager(new LinearLayoutManager(this));
         Intent intent = getIntent();
         //DataBase
@@ -74,12 +78,15 @@ public class InformationActivity extends AppCompatActivity implements Networking
     void checkfavouriteToggle(){
         if(favouriteTogglebutton.isChecked())
         {
-            Country country = new Country(SelectedCountry);
-            country.countryCode = code;
+            countryObj.setCountryName(SelectedCountry);
+            countryObj.countryCode = code;
             Toast.makeText(this, "Toggle ,True favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
-           dbService.insertNewCountry(country);
+           dbService.insertNewCountry(countryObj);
+
         }else{
-            dbService.deleteCountryname(SelectedCountry);
+           // dbService.deleteCountryname(SelectedCountry);
+            dbService.getAllCountries();
+          //  System.out.println("These are my countryes in DBBBBB" + countryList);
             Toast.makeText(this, "Toggle ,Fase favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
         }
 
@@ -116,5 +123,11 @@ public class InformationActivity extends AppCompatActivity implements Networking
         savedInstanceState.putString("currentCountry",SelectedCountry);
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void databaseAllCountriesListener(List<Country> list) {
+        listofcountries = new ArrayList<>(list);
+        System.out.println("These are my countryes in DBBBBB" + listofcountries);
     }
 }
