@@ -21,6 +21,9 @@ public interface CountryDAO {
   @Query("SELECT * FROM Country WHERE countryName = :name ")
    List<Country> getallfromcountryname(String name);
 
+    @Query("DELETE FROM Country")
+    void deleteallRows();
+
     @Query("DELETE FROM Country WHERE countryName = :name ")
     void deletecountryname(String name);
   //DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';

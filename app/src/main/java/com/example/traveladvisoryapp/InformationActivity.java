@@ -19,7 +19,7 @@ import com.example.traveladvisoryapp.NetworkingService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InformationActivity extends AppCompatActivity implements NetworkingService.NetworkingListener,DataBaseService.DatabaseListener {
+public class InformationActivity extends AppCompatActivity implements NetworkingService.NetworkingListener{
     JsonService jsonService;
     NetworkingService networkingService;
     RecyclerView recyclerViewInfo;
@@ -54,7 +54,6 @@ public class InformationActivity extends AppCompatActivity implements Networking
         //DataBase
         db = DataBaseService.getDBInstance(this);
         dbService = ((myApp)getApplication()).getDataBaseService();
-        dbService.listener = this;
         SelectedCountry = intent.getStringExtra("SelectedCountry");
         if (savedInstanceState != null) {
             //Restore value of members from saved state
@@ -86,8 +85,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
 
         }else{
            // dbService.deleteCountryname(SelectedCountry);
-            dbService.getAllCountries();
-          //  System.out.println("These are my countryes in DBBBBB" + countryList);
+            //  System.out.println("These are my countryes in DBBBBB" + countryList);
             Toast.makeText(this, "Toggle ,Fase favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
         }
 
@@ -126,10 +124,4 @@ public class InformationActivity extends AppCompatActivity implements Networking
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    @Override
-    public void databaseAllCountriesListener(List<Country> list) {
-        listofcountries = new ArrayList<>(list);
-       // System.out.println("These are my countryes in DBBBBB" + listofcountries.get(2).countryCode);
-        System.out.println("These are my code in DBBBBB" + listofcountries);
-    }
 }

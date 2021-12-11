@@ -49,6 +49,15 @@ public class DataBaseService {
             }
         });
     }
+    public void deleteallRows(){
+        databaseExecuter.execute(new Runnable() {
+            @Override
+            public void run() {
+                //Here inserting country object in background thread
+                db.getCountryDAO().deleteallRows();
+            }
+        });
+    }
     public void getAllCountries(){
         databaseExecuter.execute(new Runnable() {
             @Override
