@@ -1,10 +1,13 @@
 package com.example.traveladvisoryapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,6 +23,8 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
     Country countryObj;
     String countryCode;
     JsonService jsonService;
+    String message;
+    double riskscore;
     NetworkingService networkingService;
     RecyclerView favorite_Recyclerview;
     ArrayList<Country> listofcountries= new ArrayList<>(0);
@@ -65,13 +70,9 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
 
     @Override
     public void favcountryClicked(Country favselectedCountry) {
-//        Intent intent = new Intent(this,FavouriteActivity.class);
-//        intent.putExtra("SelectedCountry",favselectedCountry.getCountryName());
-//        startActivity(intent);
         String code = favselectedCountry.getCountryCode().toUpperCase();
         networkingService.fetchAdvisoryInfo(favselectedCountry.getCountryCode().toUpperCase());
         countryCode = favselectedCountry.getCountryCode().toUpperCase();
-
     }
 
     @Override
@@ -103,7 +104,9 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
     public void APINetworkListner(String jsonString) {
         String code = countryCode;
         advisoryInfo = jsonService.parseAdvisoryInfo(jsonString,code);
-        String message = advisoryInfo.get(0).getAdvisoryMessage();
+        message = advisoryInfo.get(0).getAdvisoryMessage();
+        riskscore = advisoryInfo.get(0).getRiskScore();//double
+        showAlert(message,riskscore);
         System.out.println("This is my message from final Actvity:" +message);
 //        advisory_textview.setText(advisoryInfo.get(0).getAdvisoryMessage()+"\n"+"Updated on:"+"\n"+advisoryInfo.get(0).getDate());
 //        risk_textview.setText("Risk Score: " +advisoryInfo.get(0).getRiskScore()+"");
@@ -112,5 +115,21 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
     @Override
     public void APINetworkingListerForImage(Bitmap image) {
 
+    }
+    private void showAlert(String message, double riskscore) {
+        // double average = storage.findAverage();
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this);//storage.scoreslist.size()
+        dialog.setMessage("message is " + message);
+        dialog.setTitle("Risk level : "+riskscore+"");
+        dialog.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
     }
 }
