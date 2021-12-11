@@ -52,4 +52,10 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
         dbService.deleteCountryname(favselectedCountry.countryName);
         favadapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void codeforFavCountry(String favcountryCode) {
+        System.out.println("From Fav Activityyyyy" + favcountryCode);
+
+    }
 }

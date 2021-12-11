@@ -19,6 +19,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
     //interface created
     interface favcountryClickListner {
         void favcountryClicked(Country favselectedCountry);
+        void codeforFavCountry(String favcountryCode);
     }
     public FavouriteAdapter.favcountryClickListner favlistener;
     public FavouriteAdapter(Context context, List<Country> countryList) {
@@ -54,6 +55,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
                     public void onClick(View v) {
                         Country country = countryList.get(getAdapterPosition());
                         favlistener.favcountryClicked(country);
+                        favlistener.codeforFavCountry(country.getCountryCode());
                     }
                 });
             }
