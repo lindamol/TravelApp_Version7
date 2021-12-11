@@ -1,6 +1,7 @@
 package com.example.traveladvisoryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -14,7 +15,8 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
     CountryDataBase db;
     Country countryObj;
     RecyclerView favorite_Recyclerview;
-    ArrayList<Country> listofcountries;
+    ArrayList<Country> listofcountries= new ArrayList<>(0);
+    FavouriteAdapter favadapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,17 +26,23 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
         db = DataBaseService.getDBInstance(this);
         dbService = ((myApp)getApplication()).getDataBaseService();
         dbService.listener = this;
+        dbService.getAllCountries();
         favorite_Recyclerview = findViewById(R.id.favorite_recyclerView);
+        favorite_Recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        favadapter = new FavouriteAdapter(this,listofcountries);
+        favorite_Recyclerview.setAdapter(favadapter);
        // dbService.getAllCountries();
         //dbService.deleteCountryname("India");
         // dbService.deleteallRows();
-        dbService.getAllCountries();
+
 
     }
 
     @Override
     public void databaseAllCountriesListener(List<Country> list) {
         listofcountries = new ArrayList<>(list);
+        favadapter.countryList = listofcountries;
+        favadapter.notifyDataSetChanged();
         // System.out.println("These are my countryes in DBBBBB" + listofcountries.get(2).countryCode);
         System.out.println("These are my DBCOuntryList" + listofcountries);
     }
