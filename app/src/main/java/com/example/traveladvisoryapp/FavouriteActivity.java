@@ -6,20 +6,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouriteActivity extends AppCompatActivity implements DataBaseService.DatabaseListener,FavouriteAdapter.favcountryClickListner{
+public class FavouriteActivity extends AppCompatActivity implements DataBaseService.DatabaseListener,
+        FavouriteAdapter.favcountryClickListner,NetworkingService.NetworkingListener{
     DataBaseService dbService;
     CountryDataBase db;
     Country countryObj;
+    String countryCode;
+    JsonService jsonService;
+    NetworkingService networkingService;
     RecyclerView favorite_Recyclerview;
     ArrayList<Country> listofcountries= new ArrayList<>(0);
     FavouriteAdapter favadapter;
     ArrayList<Country> dbCountrylist = new ArrayList<>(0);
+    ArrayList<AdvisoryInfo> advisoryInfo = new ArrayList<AdvisoryInfo>(0);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,9 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
         favadapter = new FavouriteAdapter(this,listofcountries);
         favorite_Recyclerview.setAdapter(favadapter);
          dbService.getAllCountries();
+        jsonService = ( (myApp)getApplication()).getJsonService();
+        networkingService = ( (myApp)getApplication()).getNetworkingService();
+        networkingService.listener =this;
         //dbService.deleteCountryname("India");
         //dbService.deleteallRows();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
@@ -56,8 +65,13 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
 
     @Override
     public void favcountryClicked(Country favselectedCountry) {
-//        dbService.deleteCountryname(favselectedCountry.countryName);
-//        favadapter.notifyDataSetChanged();
+//        Intent intent = new Intent(this,FavouriteActivity.class);
+//        intent.putExtra("SelectedCountry",favselectedCountry.getCountryName());
+//        startActivity(intent);
+        String code = favselectedCountry.getCountryCode().toUpperCase();
+        networkingService.fetchAdvisoryInfo(favselectedCountry.getCountryCode().toUpperCase());
+        countryCode = favselectedCountry.getCountryCode().toUpperCase();
+
     }
 
     @Override
@@ -85,4 +99,18 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
         }
     };
 
+    @Override
+    public void APINetworkListner(String jsonString) {
+        String code = countryCode;
+        advisoryInfo = jsonService.parseAdvisoryInfo(jsonString,code);
+        String message = advisoryInfo.get(0).getAdvisoryMessage();
+        System.out.println("This is my message from final Actvity:" +message);
+//        advisory_textview.setText(advisoryInfo.get(0).getAdvisoryMessage()+"\n"+"Updated on:"+"\n"+advisoryInfo.get(0).getDate());
+//        risk_textview.setText("Risk Score: " +advisoryInfo.get(0).getRiskScore()+"");
+    }
+
+    @Override
+    public void APINetworkingListerForImage(Bitmap image) {
+
+    }
 }
