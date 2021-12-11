@@ -17,20 +17,20 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
     public List<Country> countryList ;
 
     //interface created
-//    interface favcountryClickListner {
-//        void favcountryClicked(Country favselectedCountry);
-//    }
-   // public FavouriteAdapter.favcountryClickListner favlistener;
+    interface favcountryClickListner {
+        void favcountryClicked(Country favselectedCountry);
+    }
+    public FavouriteAdapter.favcountryClickListner favlistener;
     public FavouriteAdapter(Context context, List<Country> countryList) {
         this.context = context;
         this.countryList = countryList;
-       // favlistener = (FavouriteAdapter.favcountryClickListner)context;
+        favlistener = (favcountryClickListner)context;
     }
 
     @Override
     public FavouriteAdapter.FavouriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.favourite_row, parent, false);
-        return new FavouriteAdapter.FavouriteViewHolder(view);
+        return new FavouriteViewHolder(view);
         }
 
         @Override
@@ -53,7 +53,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
                     @Override
                     public void onClick(View v) {
                         Country country = countryList.get(getAdapterPosition());
-                       // favlistener.favcountryClicked(country);
+                        favlistener.favcountryClicked(country);
                     }
                 });
             }

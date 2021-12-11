@@ -10,7 +10,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouriteActivity extends AppCompatActivity implements DataBaseService.DatabaseListener{
+public class FavouriteActivity extends AppCompatActivity implements DataBaseService.DatabaseListener,FavouriteAdapter.favcountryClickListner{
     DataBaseService dbService;
     CountryDataBase db;
     Country countryObj;
@@ -31,9 +31,9 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
         favorite_Recyclerview.setLayoutManager(new LinearLayoutManager(this));
         favadapter = new FavouriteAdapter(this,listofcountries);
         favorite_Recyclerview.setAdapter(favadapter);
-       // dbService.getAllCountries();
+       //dbService.getAllCountries();
         //dbService.deleteCountryname("India");
-        // dbService.deleteallRows();
+        dbService.deleteallRows();
 
 
     }
@@ -45,5 +45,10 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
         favadapter.notifyDataSetChanged();
         // System.out.println("These are my countryes in DBBBBB" + listofcountries.get(2).countryCode);
         System.out.println("These are my DBCOuntryList" + listofcountries);
+    }
+
+    @Override
+    public void favcountryClicked(Country favselectedCountry) {
+
     }
 }
