@@ -31,9 +31,9 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
         favorite_Recyclerview.setLayoutManager(new LinearLayoutManager(this));
         favadapter = new FavouriteAdapter(this,listofcountries);
         favorite_Recyclerview.setAdapter(favadapter);
-       //dbService.getAllCountries();
+         dbService.getAllCountries();
         //dbService.deleteCountryname("India");
-        dbService.deleteallRows();
+        //dbService.deleteallRows();
 
 
     }
@@ -49,6 +49,7 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
 
     @Override
     public void favcountryClicked(Country favselectedCountry) {
-
+        dbService.deleteCountryname(favselectedCountry.countryName);
+        favadapter.notifyDataSetChanged();
     }
 }
