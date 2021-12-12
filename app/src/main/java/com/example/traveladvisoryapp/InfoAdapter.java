@@ -25,7 +25,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.viewHolder> {
         //viewholder, ie 1 row
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            infoTextview = itemView.findViewById(R.id.info_row_textview);
+            infoTextview = itemView.findViewById(R.id.inforow);
                    }
         public TextView getInfoTextview() { //getters for elements in innerclass
             return infoTextview;

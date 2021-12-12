@@ -13,13 +13,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/info_row_textview"
+            android:id="@+id/inforow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:text="CountryInfo"
             android:textSize="15sp"
             android:textColor="@color/black"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
