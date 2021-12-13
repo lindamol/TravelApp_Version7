@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
         MenuItem searchViewMenuItem = menu.findItem(R.id.search);
        androidx.appcompat.widget.SearchView searchView = (SearchView) searchViewMenuItem.getActionView();
        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-       String searchText = searchView.getQuery().toString();
+     //  String searchText = searchView.getQuery().toString();
 //        if(!searchText.isEmpty())//check countryname
 //            {searchView.setIconified(false);
 //             searchView.setQuery(searchText,false);}
@@ -81,18 +82,17 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.d("query change", newText);
-                //cadapter.getFilter().filter(newText);
                 if(newText.length()>=1){
                     // seach for country
                    cadapter.getFilter().filter(newText);
-                    //System.out.println("Going to fetchdata");
                    cadapter.countryList = countries;
                    cadapter.notifyDataSetChanged();
                 }
                 else{
-                   // cadapter.countryList = new ArrayList<>(0);
-                    cadapter.countryList = countries;
+                     cadapter.countryList = new ArrayList<>(0);
+                    networkingService.fetchCountryData();
                     cadapter.notifyDataSetChanged();
+                    //Toast.makeText(MainActivity.this, "empty inside else", Toast.LENGTH_SHORT).show();
                 }
 
                 return false;
