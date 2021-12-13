@@ -80,13 +80,13 @@ public class InformationActivity extends AppCompatActivity implements Networking
         {
             countryObj.setCountryName(SelectedCountry);
             countryObj.setCountryCode(code);
-            Toast.makeText(this, "Toggle ,True favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Added to Favourites", Toast.LENGTH_SHORT).show();
            dbService.insertNewCountry(countryObj);
 
         }else{
            // dbService.deleteCountryname(SelectedCountry);
             //  System.out.println("These are my countryes in DBBBBB" + countryList);
-            Toast.makeText(this, "Toggle ,Fase favouriteTogglebutton"+favouriteTogglebutton.isChecked(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Removed from Favourites", Toast.LENGTH_SHORT).show();
         }
 
     }
