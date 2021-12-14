@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapter.co
                 else{
                      cadapter.countryList = new ArrayList<>(0);
                     networkingService.fetchCountryData();
+                   // cadapter.countryList = countries;
                     cadapter.notifyDataSetChanged();
                     //Toast.makeText(MainActivity.this, "empty inside else", Toast.LENGTH_SHORT).show();
                 }

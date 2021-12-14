@@ -82,9 +82,10 @@ public class InformationActivity extends AppCompatActivity implements Networking
             countryObj.setCountryCode(code);
             Toast.makeText(this, "Added to Favourites", Toast.LENGTH_SHORT).show();
            dbService.insertNewCountry(countryObj);
+           //favouriteTogglebutton.setChecked(true);
 
         }else{
-           // dbService.deleteCountryname(SelectedCountry);
+            dbService.deleteCountryname(SelectedCountry);
             //  System.out.println("These are my countryes in DBBBBB" + countryList);
             Toast.makeText(this, "Removed from Favourites", Toast.LENGTH_SHORT).show();
         }

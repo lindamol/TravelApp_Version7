@@ -97,6 +97,7 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
             int position = viewHolder.getAdapterPosition();
               dbService.deleteCountryname(dbCountrylist.get(position).getCountryName());
             favadapter.countryList.remove(position);
+            favadapter.notifyDataSetChanged();
         }
     };
 
