@@ -53,9 +53,6 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
         //dbService.deleteallRows();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(favorite_Recyclerview);
-
-
-
     }
 
     @Override
@@ -88,7 +85,7 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
 
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            Toast.makeText(FavouriteActivity.this, "Item Moveing", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FavouriteActivity.this, "Item Moving", Toast.LENGTH_SHORT).show();
             return false;
         }
         @Override
