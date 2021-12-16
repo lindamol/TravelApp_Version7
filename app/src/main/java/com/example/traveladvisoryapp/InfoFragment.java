@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class InfoFragment extends Fragment implements NetworkingService.NetworkingListener {
 static  String  code;
-    String message;
+    public static String message = null;
     double riskscore;
     JsonService jsonService = new JsonService();
     NetworkingService networkingService = new NetworkingService();
@@ -63,9 +63,8 @@ static  String  code;
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-//            jsonService = ( (myApp)getApplication()).getJsonService();
-            //networkingService = ( (myApp)getApplication()).getNetworkingService();
-                      //mParam2 = getArguments().getString(ARG_PARAM2);
+//            networkingService.listener =this;
+//            networkingService.fetchAdvisoryInfo(code);
         }
     }
 
@@ -77,11 +76,16 @@ static  String  code;
         TextView messagetext = (TextView)view.findViewById(R.id.messagefrag_textView);
         TextView risktext = (TextView)view.findViewById(R.id.riskfrag_textView);
         networkingService.listener =this;
-        String x = "Hello***********************************************";
         networkingService.fetchAdvisoryInfo(code);
-       // messagetext.setText(getArguments().getString("message1"));
-        messagetext.setText(message);
-        risktext.setText(riskscore+"");
+        //Issue expalanation here :
+        //value message is null here ,Cannot pass message from listener,but when i run second time
+        // //i can see the previous fetched value in message,
+        // ie flow is it comes to oncreateView and then to Api listener ,but cannot come back to OncreatView to update the message
+        //only when i runs the app second time it updates the previous message
+        System.out.println("This is my message from final Fragment@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:" +message);
+       // System.out.println("This is my message from final Fragment@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:" +risk+"");
+       messagetext.setText(message);
+        //risktext.setText(risk+"");
         return  view;
     }
 
@@ -90,19 +94,20 @@ static  String  code;
         String codec = code.toUpperCase();
         advisoryInfo = jsonService.parseAdvisoryInfo(jsonString,codec);
          message = advisoryInfo.get(0).getAdvisoryMessage();
-        System.out.println("This is my message from final Fragment@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:" +message);
+       //System.out.println("This is my message from final Fragment@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:" +message);
         riskscore = advisoryInfo.get(0).getRiskScore();
-//        InfoFragment fragment = InfoFragment.newInstance(message,riskscore);
+        //    InfoFragment.newInstance(message,riskscore);
     }
 
-    private static InfoFragment newInstance(String message, double riskscore) {
-         InfoFragment fragment = new InfoFragment();
-//        Bundle args = new Bundle();
-//        args.putString("message1", message);
-//        args.putDouble("risk", riskscore);
-//        fragment.setArguments(args);
-        return  fragment;
-    }
+
+//    private static InfoFragment newInstance(String message, double riskscore) {
+//         InfoFragment fragment = new InfoFragment();
+////        Bundle args = new Bundle();
+////        args.putString("message1", message);
+////        args.putDouble("risk", riskscore);
+////        fragment.setArguments(args);
+//        return  fragment;
+//    }
 
     @Override
     public void APINetworkingListerForImage(Bitmap image) {
