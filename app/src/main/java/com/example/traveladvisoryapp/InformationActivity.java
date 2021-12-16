@@ -109,9 +109,13 @@ public class InformationActivity extends AppCompatActivity implements Networking
     public void APINetworkingListerForImage(Bitmap image) {flagimage.setImageBitmap(image); }
 
     public void moreAdvisoryOnclick(View view) {
-        Intent intent = new Intent(this,AdvisoryActivity.class);
-        intent.putExtra("Countrycode",code);
-        startActivity(intent);
+//        Intent intent = new Intent(this,AdvisoryActivity.class);
+//        intent.putExtra("Countrycode",code);
+//        startActivity(intent);
+
+        InfoFragment fragment = InfoFragment.newInstance(code);
+        getSupportFragmentManager().beginTransaction().add(R.id.info_frame, new InfoFragment()).commit();
+        moreadviseButton.setVisibility(View.GONE);
         recyclerViewInfo.setVisibility(View.GONE);
     }
     public void setValues(){
