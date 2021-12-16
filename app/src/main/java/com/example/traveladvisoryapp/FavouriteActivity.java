@@ -54,7 +54,6 @@ public class FavouriteActivity extends AppCompatActivity implements DataBaseServ
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(favorite_Recyclerview);
     }
-
     @Override
     public void databaseAllCountriesListener(List<Country> list) {
         listofcountries = new ArrayList<>(list);

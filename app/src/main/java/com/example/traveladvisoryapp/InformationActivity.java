@@ -112,6 +112,7 @@ public class InformationActivity extends AppCompatActivity implements Networking
         Intent intent = new Intent(this,AdvisoryActivity.class);
         intent.putExtra("Countrycode",code);
         startActivity(intent);
+        recyclerViewInfo.setVisibility(View.GONE);
     }
     public void setValues(){
         countryName_texview.setText(SelectedCountry);
